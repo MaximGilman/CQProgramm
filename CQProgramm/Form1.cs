@@ -37,6 +37,16 @@ namespace CQProgramm
 
         private void Nextbtn_Click(object sender, EventArgs e)
         {
+            foreach(Nomenclature nomen in nomenclatures.Where(x=>(x.Subclasses as IList<int>).Contains(((KeyValuePair<int, string>)ProgrammClasscmb.SelectedItem).Key)))
+            {
+                foreach (Phase phase in nomen.Phases.Where(x => (x.Types as IList<string>).Contains(((KeyValuePair<string, string>)Stepcmb.SelectedItem).Key)))
+                {
+                    foreach (string code in phase.Codes)
+                    {
+//вывод значения
+                    }
+                }
+            }
               
         }
     }
@@ -85,13 +95,23 @@ namespace CQProgramm
            
      tmp[0]= new Nomenclature("Устойчивость функционирования",                       new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase[] { new Phase("Средства восстановления при ошибках на входе", new string[] {"analysis", "design", "implementation", "testing", "release", "support"}, new string[] { "Н0101", "Н0102", "Н0103", "Н0104", "Н0105", "Н0106", "Н0107", "Н0108", "Н0109", "Н0110" }),
                                                                                                                                                                          new Phase ("Средства восстановления при сбоях оборудования",  new string[] {"analysis", "design", "implementation", "testing", "release", "support" }, new string[] {"Н0201","Н0202","Н0203","Н0204","Н0205" }),
-                                                                                                                                                                         });
+                                                                                                                                                                         new Phase("Реализация управления средствами восстановления", new string[] {"design", "implementation", "testing", "release", "support" } , new string[] {"Н0301","Н0302","Н0303","Н0304","Н0305" }) });
 
-     tmp[1]= new Nomenclature("Работоспособность",                                   new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {});
-	 tmp[2]= new Nomenclature("Простота конструкции",                                new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {});
-	 tmp[3]= new Nomenclature("Наглядность",                                         new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase [] {});
-	 tmp[4]= new Nomenclature("Структурность",                                       new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase [] {});
-	 tmp[5]= new Nomenclature("Повторяемость",                                       new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {});
+     tmp[1]= new Nomenclature("Работоспособность",                                   new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {new Phase("Функционирование в заданных режимах", new string[] { "implementation", "testing", "release", "support" }, new string[] { "Н0401" }),
+                                                                                                                                                                         new Phase ("Обеспечение обработки заданного объема информации", new string[] { "implementation", "testing", "release", "support"}, new string[] {"Н0501","Н0502" })});
+	 tmp[2]= new Nomenclature("Простота конструкции",                                new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {new Phase("Простота архитектуры проекта ПС", new string[] { "analysis", "design", "support" }, new string[] { "С0101", "С0102" }),
+                                                                                                                                                                         new Phase("Сложность архитектуры проекта", new string[]{"design", "implementation", "testing", "release", "support" } , new string[] { "С0201"}),
+                                                                                                                                                                         new Phase("Межмодульные связи", new string[]{"design" } , new string[] { "С0301", "С0302", "С0303", "С0304", "С030"}),
+                                                                                                                                                                         new Phase("Простота кодирования", new string[]{ "design", "implementation", "testing", "release" } , new string[] {"С1001", "С1002"}),
+                                                                                                                                                                                                                                        });
+	 tmp[3]= new Nomenclature("Наглядность",                                         new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase [] {new Phase("Экспертиза принятой системы идентификации", new string[] { "implementation", "testing", "release", "support" }, new string[] { "С0401" }),
+                                                                                                                                                                         new Phase ("Комментарии логики программ проекта",new string[]{"implementation", "testing", "release", "support" }, new string[]{"С0801", "С0802", "С0803" }),
+                                                                                                                                                                         new Phase ("Оформление текста программы",new string[]{"implementation", "testing", "release", "support" }, new string[]{"С0901", "С0902","С0903" }) });
+	 tmp[4]= new Nomenclature("Структурность",                                       new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase [] {new Phase("Использование основных логических структур", new string[] {"implementation", "testing", "release", "support"}, new string[] {"С0501" }),
+                                                                                                                                                                         new Phase("Соблюдение принципа нисходящего программирования", new string[] {"implementation", "testing", "release", "support" }, new string[] {"С0601", "С0602", "С0603", "С0604" }),
+                                                                                                                                                                         new Phase("Комментарии обоснования декомпозиции программ при кодировании", new string[] {"implementation", "testing", "release", "support"}, new string[] { "С0701"})});
+	 tmp[5]= new Nomenclature("Повторяемость",                                       new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {new Phase ("Использование типовых компонентов ПС", new string[] { "analysis", "design" } , new string[]{ "С1301"}),
+                                                                                                                                                                         new Phase ("Использование типовых проектных решений", new string[] { "design" } , new string[]{"С1401" })});
 	 tmp[6]= new Nomenclature("Легкость освоения",                                   new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {});
 	 tmp[7]= new Nomenclature("Доступность эксплутационных программных документов",	 new int []  {5011,5012,5013,5014,5015,5016,5017,503,504,505,506,509}, new Phase [] {});
 	 tmp[8]= new Nomenclature("Удобство эксплуатации",                               new int []  {5011,5012,5013,5014,5015,5016,5017,    504,505,506,509}, new Phase [] {});
@@ -110,4 +130,4 @@ namespace CQProgramm
             return tmp;
         }
     }
-}
+}//                                                                                                                                                                                 new Phase (, new string[] { } , new string[]{ }

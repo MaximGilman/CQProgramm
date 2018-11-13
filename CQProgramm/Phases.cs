@@ -8,9 +8,9 @@ namespace CQProgramm
 {
     public class Phase
     {
-        string Title { get; set; }
-        string[] Types { get; set; }
-        string[] Codes { get; set; }
+        public string Title { get; set; }
+        public string[] Types { get; set; }
+        public string[] Codes { get; set; }
 
         public Phase(string title, string[] types, string[] codes)
         {
