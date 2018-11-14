@@ -45,11 +45,12 @@ namespace CQProgramm
                 {
                     foreach (string code in phase.Codes)
                     {
+                        if (!phase.Contains(code)) { 
                         var label = new Label
                         {
                             Name = string.Format("Label{0}", code),
                             //Tag = string.Format("Label {0}",code),
-                            Text = Elements.Where(x => x.Key == code).Select(y => y.Value).FirstOrDefault(),
+                            Text = Elements.Where(x => x.Key == code).Select(y => y.Key+": "+y.Value).FirstOrDefault(),
                             Location = new Point(0, yPosition),
                             AutoSize = true
                         };
@@ -77,17 +78,111 @@ namespace CQProgramm
                         track.Scroll += track_Scroll;
                         yPosition += 50;
 
-                        //Button new_label = new Button();
-                        //new_label.Name = code;
-                        //new_label.Text = Elements.Where(x => x.Key == code).Select(y => y.Value).FirstOrDefault();
-                        //this.Controls.Add(new_label);
-                        //вывод значения
+                            //Button new_label = new Button();
+                            //new_label.Name = code;
+                            //new_label.Text = Elements.Where(x => x.Key == code).Select(y => y.Value).FirstOrDefault();
+                            //this.Controls.Add(new_label);
+                            //вывод значения
+                        }
+                        else
+                        {
+                            var item = phase.GetElem(code);
+                            //заголовок
+                            var label = new Label
+                            {
+                                Name = string.Format("Label{0}", code),
+                                //Tag = string.Format("Label {0}",code),
+                                Text = item.Text,
+                                Location = new Point(0, yPosition),
+                                AutoSize = true,
+                                Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+                        }; yPosition += 20;
+                            Controls.Add(label);
+
+
+                            //текст левой переменной
+                            label = new Label
+                            {
+                                Name = string.Format("Label{0}", code),
+                                //Tag = string.Format("Label {0}",code),
+                                Text = item.leftName,
+                                Location = new Point(0, yPosition),
+                                AutoSize = true
+                            }; yPosition += 20;
+                            Controls.Add(label);
+
+                            //значение левой переменной
+                            var numeric = new NumericUpDown
+                            {
+                                Name = string.Format("TextBox{0}", code),
+                                Location = new Point(0, yPosition),
+
+                            }; yPosition += 30;
+                            Controls.Add(numeric);
+                            numeric.ValueChanged += numeric_ValueChanged;
+
+
+                            //текст правой
+                            label = new Label
+                            {
+                                Name = string.Format("Label{0}", code),
+                                //Tag = string.Format("Label {0}",code),
+                                Text = item.rightName,
+                                Location = new Point(0, yPosition),
+                                AutoSize = true
+                            }; yPosition += 20;
+                            Controls.Add(label);
+
+                            //значение правой
+                             numeric = new NumericUpDown
+                            {
+                                Name = string.Format("TextBox{0}", code),
+                                Location = new Point(0, yPosition),
+
+                            }; yPosition += 30;
+                            Controls.Add(numeric);
+                            numeric.ValueChanged += numeric_ValueChanged;
+
+
+                            //итог
+                            label = new Label
+                            {
+                                Name = string.Format("AnswerLabel{0}", code),
+                                Text = item.Calculate().ToString(),
+                                Location = new Point(0, yPosition),
+                                AutoSize = true
+                            }; yPosition += 20;
+                            Controls.Add(label);
+                        }
+
                     }
+
                 }
+
             }
+            var Button = new Button
+            {
+                Name = string.Format("Nextbtn"),
+                 Location = new Point(100, yPosition),
+                AutoSize = true,
+                Text= "Далее"
+            };
+            Controls.Add(Button);
+            Button.Click += Button_Click;
 
         }
-        private void track_Scroll(object sender, EventArgs e)
+        private void numeric_ValueChanged(object sender, EventArgs e)
+        {
+            var name = (sender as NumericUpDown).Name;
+            name=name.Replace("TextBox","");
+            var tracklabel = (Label)this.Controls.Find("AnswerLabel"+name, true).First();
+            tracklabel.Text = String.Format("Текущее значение: {0}", 90);
+        }
+        private void Button_Click(object sender, EventArgs e)
+        {
+
+        }
+            private void track_Scroll(object sender, EventArgs e)
         {
             var name = (sender as TrackBar);
             var tracklabel = (Label)this.Controls.Find("Label"+name.Name, true).First();
@@ -466,6 +561,16 @@ namespace CQProgramm
 
 
             return tmp;
+        }
+        public static string[] getTitles(this Countable[] dict)
+        {
+            string []returner = new string[8];
+
+            for (int i = 0; i < returner.Length; i++)
+            {
+                returner[i] = dict[i].Title;
+            }
+            return returner;
         }
     }
 }//                                                                                                                                                                                 new Phase (, new string[] { } , new string[]{ })

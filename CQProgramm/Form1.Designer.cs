@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ТипПС = new System.Windows.Forms.Label();
-            this.ProgrammClasscmb = new System.Windows.Forms.ComboBox();
+            this.Nextbtn = new System.Windows.Forms.Button();
             this.Стадия = new System.Windows.Forms.Label();
             this.Stepcmb = new System.Windows.Forms.ComboBox();
-            this.Nextbtn = new System.Windows.Forms.Button();
+            this.ТипПС = new System.Windows.Forms.Label();
+            this.ProgrammClasscmb = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,22 +49,15 @@
             this.panel1.Size = new System.Drawing.Size(776, 426);
             this.panel1.TabIndex = 1;
             // 
-            // ТипПС
+            // Nextbtn
             // 
-            this.ТипПС.AutoSize = true;
-            this.ТипПС.Location = new System.Drawing.Point(31, 34);
-            this.ТипПС.Name = "ТипПС";
-            this.ТипПС.Size = new System.Drawing.Size(124, 17);
-            this.ТипПС.TabIndex = 1;
-            this.ТипПС.Text = "Выберите тип ПС";
-            // 
-            // ProgrammClasscmb
-            // 
-            this.ProgrammClasscmb.FormattingEnabled = true;
-            this.ProgrammClasscmb.Location = new System.Drawing.Point(14, 57);
-            this.ProgrammClasscmb.Name = "ProgrammClasscmb";
-            this.ProgrammClasscmb.Size = new System.Drawing.Size(759, 24);
-            this.ProgrammClasscmb.TabIndex = 0;
+            this.Nextbtn.Location = new System.Drawing.Point(207, 400);
+            this.Nextbtn.Name = "Nextbtn";
+            this.Nextbtn.Size = new System.Drawing.Size(348, 23);
+            this.Nextbtn.TabIndex = 4;
+            this.Nextbtn.Text = "Продолжить";
+            this.Nextbtn.UseVisualStyleBackColor = true;
+            this.Nextbtn.Click += new System.EventHandler(this.Nextbtn_Click);
             // 
             // Стадия
             // 
@@ -83,15 +76,22 @@
             this.Stepcmb.Size = new System.Drawing.Size(759, 24);
             this.Stepcmb.TabIndex = 2;
             // 
-            // Nextbtn
+            // ТипПС
             // 
-            this.Nextbtn.Location = new System.Drawing.Point(207, 400);
-            this.Nextbtn.Name = "Nextbtn";
-            this.Nextbtn.Size = new System.Drawing.Size(348, 23);
-            this.Nextbtn.TabIndex = 4;
-            this.Nextbtn.Text = "Продолжить";
-            this.Nextbtn.UseVisualStyleBackColor = true;
-            this.Nextbtn.Click += new System.EventHandler(this.Nextbtn_Click);
+            this.ТипПС.AutoSize = true;
+            this.ТипПС.Location = new System.Drawing.Point(31, 34);
+            this.ТипПС.Name = "ТипПС";
+            this.ТипПС.Size = new System.Drawing.Size(124, 17);
+            this.ТипПС.TabIndex = 1;
+            this.ТипПС.Text = "Выберите тип ПС";
+            // 
+            // ProgrammClasscmb
+            // 
+            this.ProgrammClasscmb.FormattingEnabled = true;
+            this.ProgrammClasscmb.Location = new System.Drawing.Point(14, 57);
+            this.ProgrammClasscmb.Name = "ProgrammClasscmb";
+            this.ProgrammClasscmb.Size = new System.Drawing.Size(759, 24);
+            this.ProgrammClasscmb.TabIndex = 0;
             // 
             // Form1
             // 
