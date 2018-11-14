@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQProgramm
 {
-    public class Countable
+    public class Countable : EventArgs
     {
         public string Title;
         public string Text;

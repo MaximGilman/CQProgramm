@@ -119,7 +119,8 @@ namespace CQProgramm
 
                             }; yPosition += 30;
                             Controls.Add(numeric);
-                            numeric.ValueChanged += numeric_ValueChanged;
+                            
+                            numeric.ValueChanged += numeric_ValueChanged ;
 
 
                             //текст правой
@@ -180,7 +181,34 @@ namespace CQProgramm
         }
         private void Button_Click(object sender, EventArgs e)
         {
+            foreach (Control c in this.Controls) { c.Visible = false; }
 
+            foreach (Nomenclature nomen in nomenclatures.Where(x => (x.Subclasses as IList<int>).Contains(((KeyValuePair<int, string>)ProgrammClasscmb.SelectedItem).Key)))
+            {
+                var MetricSum = 0.00; var MetricCount = 0;
+                var totalCriteria = 0.00; var amountCriteria = 0;
+                foreach (Phase phase in nomen.Phases.Where(x => (x.Types as IList<string>).Contains(((KeyValuePair<string, string>)Stepcmb.SelectedItem).Key)))
+                {
+                    var ElementSum = 0.00; var ElementCount = 0;
+                    foreach (string code in phase.Codes)
+                    {
+                         try
+                        {
+                            var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text==""? "50": ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text;
+                            ElementSum += Convert.ToDouble(tracklabel.Remove(tracklabel.IndexOf(":")));
+                            ElementCount++;
+                        }
+                        catch { }
+                    }
+                    MetricSum += Math.Round(ElementSum / ElementCount,2);
+                    MetricCount++;
+                }
+                if(MetricCount>=1)
+                {
+                     totalCriteria = Math.Round(MetricSum / MetricCount, 2);
+                    amountCriteria++;
+                }
+            }
         }
             private void track_Scroll(object sender, EventArgs e)
         {
