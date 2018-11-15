@@ -43,6 +43,7 @@ namespace CQProgramm
             {
                 foreach (Phase phase in nomen.Phases.Where(x => (x.Types as IList<string>).Contains(((KeyValuePair<string, string>)Stepcmb.SelectedItem).Key)))
                 {
+                    
                     foreach (string code in phase.Codes)
                     {
                         if (!phase.Contains(code)) { 
@@ -185,10 +186,12 @@ namespace CQProgramm
                 foreach (Phase phase in nomen.Phases.Where(x => (x.Types as IList<string>).Contains(((KeyValuePair<string, string>)Stepcmb.SelectedItem).Key)))
                 {
                     var ElementSum = 0.00; var ElementCount = 0;
+                   
                     foreach (string code in phase.Codes)
                     {
                          try
                         {
+                           
                             if (phase.Contains(code))
                             {
                                 ElementSum += Double.IsNaN(phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value))) ? 50 : phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value))*100;
