@@ -190,12 +190,14 @@ namespace CQProgramm
                          try
                         {
                             if (phase.Contains(code))
-                                ElementSum += Double.IsNaN(phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value)))? 0: phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value));
+                            {
+                                ElementSum += Double.IsNaN(phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value))) ? 50 : phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value))*100;
+                            }
                             else
                             {
-                                var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text == "" ? 
-                                    "50" : 
-                                    ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.Replace("Текущее значение: ", "");
+                                var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text == "" ?
+                                    50 :
+                                    Convert.ToDouble(((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.Replace("Текущее значение: ", "")) * 100;
 
 
 
