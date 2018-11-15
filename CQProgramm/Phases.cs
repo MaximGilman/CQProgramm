@@ -29,6 +29,10 @@ namespace CQProgramm
         {
            return CountableList.getTitles().Contains(element);
          }
+        public double Calculate(string element, double left, double right)
+        {
+            return CountableList.Where(x=>x.Title==element).FirstOrDefault().Calculate(left, right);
+        }
 
     }
 }

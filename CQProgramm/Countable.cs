@@ -44,9 +44,30 @@ namespace CQProgramm
             return countables;
 
         }
-        public double Calculate()
+        public double Calculate(double left, double right)
         {
-            return 12*12;
+            this.rightValue = right;
+            this.leftValue = left;
+            switch(this.Title)
+            {
+                case "Н0305": { return 1 - (leftValue/rightValue); }
+                case "Н0401": { return 1 - (leftValue / rightValue); }
+                case "Н0501": { if (leftValue >= rightValue) return 1;
+                        else return leftValue/rightValue; }
+                case "Н0502":
+                    {
+                        if (leftValue >= rightValue) return 1;
+                        else return leftValue / rightValue;
+                    }
+                case "С0302": { return 1 /((leftValue+1)*(rightValue+1)); }
+                case "С1002": { return 1 - (leftValue / rightValue); }
+                case "К1003":
+                    { return (leftValue / rightValue); }
+                case "К1004":
+                    { return (leftValue / rightValue); }
+
+            }
+            return -1; //error flag
         }
 
     }

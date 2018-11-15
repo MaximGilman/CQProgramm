@@ -114,13 +114,12 @@ namespace CQProgramm
                             //значение левой переменной
                             var numeric = new NumericUpDown
                             {
-                                Name = string.Format("TextBox{0}", code),
+                                Name = string.Format("TextBoxL{0}", code),
                                 Location = new Point(0, yPosition),
 
                             }; yPosition += 30;
                             Controls.Add(numeric);
                             
-                            numeric.ValueChanged += numeric_ValueChanged ;
 
 
                             //текст правой
@@ -137,23 +136,22 @@ namespace CQProgramm
                             //значение правой
                              numeric = new NumericUpDown
                             {
-                                Name = string.Format("TextBox{0}", code),
+                                Name = string.Format("TextBoxR{0}", code),
                                 Location = new Point(0, yPosition),
 
                             }; yPosition += 30;
                             Controls.Add(numeric);
-                            numeric.ValueChanged += numeric_ValueChanged;
 
 
-                            //итог
-                            label = new Label
-                            {
-                                Name = string.Format("AnswerLabel{0}", code),
-                                Text = item.Calculate().ToString(),
-                                Location = new Point(0, yPosition),
-                                AutoSize = true
-                            }; yPosition += 20;
-                            Controls.Add(label);
+                            ////итог
+                            //label = new Label
+                            //{
+                            //    Name = string.Format("AnswerLabel{0}", code),
+                            //    Text = item.Calculate().ToString(),
+                            //    Location = new Point(0, yPosition),
+                            //    AutoSize = true
+                            //}; yPosition += 20;
+                            //Controls.Add(label);
                         }
 
                     }
@@ -172,17 +170,13 @@ namespace CQProgramm
             Button.Click += Button_Click;
 
         }
-        private void numeric_ValueChanged(object sender, EventArgs e)
-        {
-            var name = (sender as NumericUpDown).Name;
-            name=name.Replace("TextBox","");
-            var tracklabel = (Label)this.Controls.Find("AnswerLabel"+name, true).First();
-            tracklabel.Text = String.Format("Текущее значение: {0}", 90);
-        }
+       
         private void Button_Click(object sender, EventArgs e)
         {
+            List<char> AlreadyAdded = new List<char>();
+            var yyPosition = 0;
             foreach (Control c in this.Controls) { c.Visible = false; }
-
+            
             foreach (Nomenclature nomen in nomenclatures.Where(x => (x.Subclasses as IList<int>).Contains(((KeyValuePair<int, string>)ProgrammClasscmb.SelectedItem).Key)))
             {
                 var MetricSum = 0.00; var MetricCount = 0;
@@ -194,19 +188,136 @@ namespace CQProgramm
                     {
                          try
                         {
-                            var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text==""? "50": ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text;
-                            ElementSum += Convert.ToDouble(tracklabel.Remove(tracklabel.IndexOf(":")));
+                            if (phase.Contains(code))
+                                ElementSum += Double.IsNaN(phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value)))? 0: phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value));
+                            else
+                            {
+                                var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text == "" ? "50" : ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.Remove(((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.IndexOf(":"));
+
+
+
+                                ElementSum += Convert.ToDouble(tracklabel);
+                            }
+                          
+
                             ElementCount++;
-                        }
+                         }
                         catch { }
+                       
+                        
                     }
+
                     MetricSum += Math.Round(ElementSum / ElementCount,2);
                     MetricCount++;
                 }
-                if(MetricCount>=1)
                 {
                      totalCriteria = Math.Round(MetricSum / MetricCount, 2);
+                    if (!Double.IsNaN(totalCriteria)) {
+                        if (!AlreadyAdded.Contains(nomen.Phases[0].Codes[0].First()))
+                        {
+                            switch (nomen.Phases[0].Codes[0].First())
+                            {
+                                case 'Н':
+                                    {
+                                       var label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Надежность  ",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                           Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                       }; yyPosition += 20;
+                                        AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+                                        Controls.Add(label1); break;
+                                    }
+                                case 'С':
+                                    {
+                                        var label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Сопровождаемость  ",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                            Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                        }; yyPosition += 20; AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+
+                                        Controls.Add(label1); break;
+                                    }
+                                case 'У':
+                                    {
+                                      var  label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Удобство применения  ",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                          Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                      }; yyPosition += 20; AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+
+                                        Controls.Add(label1); break;
+                                    }
+                                case 'Э':
+                                    {
+                                        var label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Эффективность",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                            Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                        }; yyPosition += 20; AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+
+                                        Controls.Add(label1); break;
+                                    }
+                                case 'Г':
+                                    {
+                                        var label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Универсальность",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                            Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                        }; yyPosition += 20; AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+
+                                        Controls.Add(label1); break;
+                                    }
+                                case 'К':
+                                    {
+                                        var label1 = new Label
+                                        {
+                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Text = "Корректность",
+                                            Location = new Point(0, yyPosition),
+                                            AutoSize = true,
+                                            Font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold)
+
+                                        }; yyPosition += 20; AlreadyAdded.Add(nomen.Phases[0].Codes[0].First());
+
+                                        Controls.Add(label1); break;
+                                    }
+                            }
+                        }
+
+
+                        var label = new Label
+                    {
+                        Name = string.Format("Answer{0}",MetricCount),
+                        Text = nomen.Title+"  "+ totalCriteria.ToString(),
+                        Location = new Point(0, yyPosition),
+                        AutoSize = true
+                    }; yyPosition += 20;
+                    Controls.Add(label);
+                 
                     amountCriteria++;
+                       
+                    }
+
                 }
             }
         }
