@@ -174,6 +174,7 @@ namespace CQProgramm
         private void Button_Click(object sender, EventArgs e)
         {
             List<char> AlreadyAdded = new List<char>();
+ 
             var yyPosition = 0;
             foreach (Control c in this.Controls) { c.Visible = false; }
             
@@ -192,7 +193,9 @@ namespace CQProgramm
                                 ElementSum += Double.IsNaN(phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value)))? 0: phase.Calculate(code, Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxL" + code, true).First()).Value), Convert.ToDouble(((NumericUpDown)this.Controls.Find("TextBoxR" + code, true).First()).Value));
                             else
                             {
-                                var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text == "" ? "50" : ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.Remove(((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.IndexOf(":"));
+                                var tracklabel = ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text == "" ? 
+                                    "50" : 
+                                    ((Label)this.Controls.Find("LabelTrackbar" + code, true).First()).Text.Replace("Текущее значение: ", "");
 
 
 
@@ -221,7 +224,7 @@ namespace CQProgramm
                                     {
                                        var label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("Н"),
                                             Text = "Надежность  ",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -235,7 +238,7 @@ namespace CQProgramm
                                     {
                                         var label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("С"),
                                             Text = "Сопровождаемость  ",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -249,7 +252,7 @@ namespace CQProgramm
                                     {
                                       var  label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("У"),
                                             Text = "Удобство применения  ",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -263,7 +266,7 @@ namespace CQProgramm
                                     {
                                         var label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("Э"),
                                             Text = "Эффективность",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -277,7 +280,7 @@ namespace CQProgramm
                                     {
                                         var label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("Г"),
                                             Text = "Универсальность",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -291,7 +294,7 @@ namespace CQProgramm
                                     {
                                         var label1 = new Label
                                         {
-                                            Name = string.Format("Mark{0}", MetricCount),
+                                            Name = string.Format("К"),
                                             Text = "Корректность",
                                             Location = new Point(0, yyPosition),
                                             AutoSize = true,
@@ -319,7 +322,11 @@ namespace CQProgramm
                     }
 
                 }
+               
             }
+            
+
+
         }
             private void track_Scroll(object sender, EventArgs e)
         {
